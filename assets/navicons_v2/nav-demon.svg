@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 105" role="img" aria-label="Radio">
+<defs>
+<filter id="demon_grain" x="-20%" y="-20%" width="140%" height="140%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0" result="grain"/>
+  <feComposite in="grain" in2="SourceGraphic" operator="in" result="grainClipped"/>
+  <feMerge>
+    <feMergeNode in="SourceGraphic"/>
+    <feMergeNode in="grainClipped"/>
+  </feMerge>
+</filter>
+<filter id="demon_blur1" x="-60%" y="-60%" width="220%" height="220%">
+  <feGaussianBlur stdDeviation="2.4"/>
+</filter>
+<filter id="demon_blur2" x="-80%" y="-80%" width="260%" height="260%">
+  <feGaussianBlur stdDeviation="4.5"/>
+</filter>
+<radialGradient id="demon_g" cx="34%" cy="26%" r="85%">
+  <stop offset="0%" stop-color="#c9724f"/>
+  <stop offset="55%" stop-color="#8a3d2a"/>
+  <stop offset="100%" stop-color="#4a1508"/>
+</radialGradient></defs>
+
+<ellipse cx="50" cy="95" rx="28" ry="6.5" fill="#000" opacity="0.32" filter="url(#demon_blur2)"/>
+<path d="M50 16 C42 24 34 30 30 40 C26 50 28 62 34 72 C30 68 26 62 26 54 C20 62 20 74 28 82 C36 90 46 88 50 82 C54 88 64 90 72 82 C80 74 80 62 74 54 C74 62 70 68 66 72 C72 62 74 50 70 40 C66 30 58 24 50 16 Z" fill="url(#demon_g)" stroke="#3a1408" stroke-width="3.4" filter="url(#demon_grain)"/>
+<path d="M50 16 C42 24 34 30 30 40 C26 50 28 62 34 72 C30 68 26 62 26 54 C20 62 20 74 28 82 C36 90 46 88 50 82 C54 88 64 90 72 82 C80 74 80 62 74 54 C74 62 70 68 66 72 C72 62 74 50 70 40 C66 30 58 24 50 16 Z" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="2" transform="translate(-1,-1.3)"/>
+<path d="M38 56 C42 52 48 52 50 57 C52 52 58 52 62 56" fill="none" stroke="#00000066" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.55,0.8)"/>
+<path d="M38 56 C42 52 48 52 50 57 C52 52 58 52 62 56" fill="none" stroke="#ffffff45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.45,-0.6)"/>
+<path d="M50 57 L50 68" fill="none" stroke="#00000066" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.55,0.8)"/>
+<path d="M50 57 L50 68" fill="none" stroke="#ffffff45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.45,-0.6)"/>
+<path d="M44 72 C47 75 53 75 56 72" fill="none" stroke="#00000066" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.55,0.8)"/>
+<path d="M44 72 C47 75 53 75 56 72" fill="none" stroke="#ffffff45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.45,-0.6)"/>
+<path d="M32 46 C36 44 40 45 42 48" fill="none" stroke="#00000066" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.55,0.8)"/>
+<path d="M32 46 C36 44 40 45 42 48" fill="none" stroke="#ffffff45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.45,-0.6)"/>
+<path d="M68 46 C64 44 60 45 58 48" fill="none" stroke="#00000066" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.55,0.8)"/>
+<path d="M68 46 C64 44 60 45 58 48" fill="none" stroke="#ffffff45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.45,-0.6)"/>
+<ellipse cx="38" cy="42" rx="11" ry="15" fill="#ffffff" opacity="0.45" filter="url(#demon_blur1)" transform="rotate(-15 38 42)"/>
+<ellipse cx="33" cy="36" rx="4.5" ry="4" fill="#ffffff" opacity="0.3" filter="url(#demon_blur1)" transform="rotate(-15 33 36)"/>
+
+</svg>
