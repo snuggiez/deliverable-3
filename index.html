@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Hidden Lagoon - BUILD1672 RADIO 20 IMAGES</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/nav.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/intro.css">
+
+
+</head>
+
+<body>
+
+<!-- BUILD1669 — CINEMATIC STUDIO INTRO -->
+
+
+<div id="hl1669Intro" aria-label="Hidden Lagoon Studios intro">
+  <video id="hl1669IntroVideo" playsinline muted preload="auto">
+    <source src="assets/intro/intro.mp4" type="video/mp4">
+  </video>
+  <div id="hl1669Vignette"></div>
+  <div id="hl1669Grain"></div>
+  <div id="hl1669BarTop"></div>
+  <div id="hl1669BarBottom"></div>
+  <div id="hl1669Signal">SIGNAL ACQUIRED</div>
+  <button id="hl1669Skip" type="button">SKIP INTRO</button>
+
+  <div id="hl1671Secret" aria-hidden="true">
+    <div id="hl1671SecretFrame"></div>
+    <div id="hl1671SecretNoise"></div>
+  </div>
+
+  <div id="hl1669LogoStage">
+    <div id="hl1669Flash"></div>
+    <img id="hl1669Logo" src="assets/intro/hidden_lagoon_studios.png" alt="Hidden Lagoon Studios">
+    <div id="hl1669LogoSweep"></div>
+    <div id="hl1669Presents">PRESENTS</div>
+    <div id="hl1669Tagline">A SALT-WORN CORNER OF THE COAST</div>
+  </div>
+</div>
+
+<script src="js/ui/intro.js"></script>
+<!-- END BUILD1669 -->
+
+<!-- BUILD1620 RADIO RECOVERY: restored lore bank into RadioManager; repeated rumor filler removed -->
+<div id="introScreen">
+  <div id="introGlow"></div>
+  <img id="introLogo" src="images/intro/hiddenlagoonstudios1.png" alt="Hidden Lagoon Studios"/>
+  <div id="introVignette"></div>
+  <div id="introGrain"></div>
+  <div id="introTapHint">Tryck var som helst för att fortsätta</div>
+  <audio id="introWaterSound" src="sounds/bryansantosbreton-darkness-tonal-cymbal-roll-riser-braam-impact-184275.mp3" preload="auto" loop></audio>
+</div>
+
+<div id="engineDebugHud"></div>
+<div class="sunRays"></div>
+<div class="waterCaustics"></div>
+
+<!-- =====================================================================
+     HOME WORLD
+     Every "living world" object (Steve, fish, seal, octopus, crab,
+     bubbles, scanner HUD, POV cam, radar, mascot...) lives inside this
+     ONE container. Toggling #homeWorld.hlHidden is the only thing
+     UIManager.showTab() needs to do to hide the entire living world on
+     every tab except Home. Anything spawned dynamically by JS must be
+     appended here via worldRoot() — never to document.body.
+     ===================================================================== -->
+<div id="homeWorld">
+<div id="worldViewport">
+  <div id="worldCamera">
+    <div id="crabLayer"></div>
+    <img id="mackeMackerel" src="makrill/makrill_glad.png" alt="Macke Makrill">
+<div id="oldPierLandmark">
+      <div class="oldPierGlow"></div>
+      <div class="oldPierIcon">🏝️</div>
+      <div class="oldPierLabel">Old Pier</div>
+    </div>
+    <div id="pierWaves" class="pierWaves">
+      <div class="pierWave w1"></div>
+      <div class="pierWave w2"></div>
+      <div class="pierWave w3"></div>
+    </div>
+  </div>
+</div>
+
+<div class="lagoonFog"></div>
+
+<div id="scannerHud">
+<b>SCANNER</b>
+<div id="scannerBar"><div id="scannerFill"></div></div>
+<div id="scannerTarget">Target: STEVE</div>
+<div id="scannerState">State: FLY</div>
+<div id="scannerDist">Distance: 43 m</div>
+</div>
+
+<div id="steveLayer"><div id="steveCanvasShadow" style="position:absolute;width:90px;height:18px;border-radius:50%;background:rgba(0,0,0,.28);filter:blur(5px);pointer-events:none;"></div><canvas id="steveCanvas" width="220" height="110" style="display:none"></canvas></div>
+<div id="steveSpeech"></div>
+
+<div id="steveCardOverlay" onclick="if(event.target===this)this.style.display='none'">
+<div id="steveCard">
+<h2>🐦 Seagull Steve</h2>
+<img src="assets/09_steve.jpg" onerror="window.wireImgCascade?.(this,STEVE_SPRITE_CANDIDATES.slice(1),'Steve card popup')"/>
+<p><b>Plats:</b> <span id="steveCardPlace">Old Pier</span></p>
+<p>🍟 Professionell snackstjuv.</p>
+<button onclick="document.getElementById('steveCardOverlay').style.display='none'">Stäng</button>
+</div>
+</div>
+
+<div id="packFx"><div class="pack">📦</div><div class="msg">RIPPING PACK...</div></div>
+<img id="activeMascot" src="beachcat_idle.png"/>
+<img id="catGearLayer"/>
+<div id="joystickBase"><div id="joystickKnob"></div></div>
+
+<div id="oldPierPrompt">
+  <button id="oldPierEnterBtn" onclick="enterOldPierFromWorld()">🚶 Gå till Old Pier <span class="keyHint">E</span></button>
+</div>
+
+<div id="povBubble">
+ <div id="povScene"></div>
+ <div id="povPalm">🌴</div>
+ <div id="povBird">🐦</div>
+ <div id="povEars">🐱</div>
+ <div id="povLabel">BEACH CAT POV</div>
+</div>
+
+<button id="pocketRadarBtn">◎</button>
+<div id="radarOverlay">
+<h2>📡 Pocket Radar</h2>
+<div id="radarScope"><div id="radarSweep"></div><div id="radarBlip"></div></div>
+<button onclick="document.getElementById('radarOverlay').style.display='none'">Close</button>
+</div>
+
+<div id="lagoonToast"></div>
+
+</div>
+<!-- ===== END HOME WORLD ===== -->
+
+<div id="hlToast"></div>
+
+<div id="globalSelfieCam" aria-label="Selfie Cam">
+  <div class="selfieCam" id="selfieCam">
+    <img class="selfieCamImg" id="selfieCamImgA"/>
+    <img class="selfieCamImg active" id="selfieCamImgB"/>
+    <div class="selfieCamGlow"></div>
+  </div>
+</div>
+
+
+
+<div id="collectionCardViewer" onclick="closeCollectionCardViewer(event)" aria-hidden="true">
+  <div id="collectionCardViewerCard">
+    <button id="collectionCardViewerClose" onclick="closeCollectionCardViewer()">×</button>
+    <img id="collectionCardViewerImg" alt="">
+    <div id="collectionCardViewerName"></div>
+  </div>
+</div>
+
+
+<div id="mackeCatchFx" aria-hidden="true">
+  <img id="mackeCatchFish" src="makrill/makrill_glad.png" alt="Macke Makrill">
+  <div id="mackeCatchSplash">SPLOSH!</div>
+</div>
+
+
+<!-- PASS D: Quest foundations, scanner emphasis and first mystery hook -->
+<!-- =====================================================================
+     HOME — Hero / Continue / Quest / Scanner / Steve Activity /
+     Latest Discovery. Nothing else. No debug, no duplicate info cards.
+     ===================================================================== -->
+<div class="tab active" id="home">
+
+  <div class="heroCard">
+
+    <img class="heroImg" id="heroImg" src="images/selfiecam/selfie6_front.png" onerror="this.onerror=null;this.src='beachcat.jpg'"/>
+    <div class="heroOverlay">
+      <div class="name" id="heroOverlayName">GOLF CAT</div>
+      <div>LEVEL <span id="heroLevel">1</span> &nbsp;·&nbsp; RESCUES <span id="heroRescues">0</span></div>
+    </div>
+    <div class="heroActions">
+      <button onclick="Game.get('player').addXP(10)">🍟 Treat</button>
+      <button onclick="Game.get('player').addXP(25)">🦐 Hunt</button>
+      <button onclick="Game.get('player').rescue();Game.get('player').addXP(50)">🐱 Rescue</button>
+    </div>
+  </div>
+
+  
+<div class="card continueCard missionPulse">
+<h3>BEGIN MISSION — ADVENTURE!</h3>
+<div id="continueText">Start exploring the lagoon.</div>
+<div style="margin-top:8px;font-size:14px">
+<b>🌴 <b>Current Quest:</b></b> <span id="questText">Follow Steve to Old Pier, scan the strange signal and recover the Hidden Cache.</span>
+</div>
+<div class="bar"><div class="barFill" id="questBar" style="width:0%"></div></div>
+<div id="questProgressText">Mission 1 of 5</div>
+<button id="continueBtn" style="font-size:18px;letter-spacing:.5px" onclick="continueGame()">▶ FOLLOW STEVE TO OLD PIER</button>
+</div>
+
+  <div class="card psu1Device passDGlow">
+    <div class="psu1TopBar">
+      <div class="psu1Title">PSU-1<small>POCKET SIGNAL UNIT</small></div>
+      <button type="button" id="psu1PowerBtn" class="psu1PowerBtn" onclick="PSU1UI.togglePower()">⏻</button>
+    </div>
+    <div class="psu1Leds">
+      <span class="psu1Led" id="psu1LedPower"><i></i>POWER</span>
+      <span class="psu1Led" id="psu1LedSignal"><i></i>SIGNAL</span>
+      <span class="psu1Led" id="psu1LedLock"><i></i>LOCK</span>
+      <span class="psu1Led" id="psu1LedRadio"><i></i>RADIO</span>
+    </div>
+
+    <div class="scannerCard">
+      <div class="scannerRig">
+        <div class="scannerViz">
+          <div class="scannerRing r1"></div>
+          <div class="scannerRing r2"></div>
+          <div class="scannerRing r3"></div>
+          <div class="scannerSweep"></div>
+          <div class="scannerDot">📡</div>
+        </div>
+        <div class="pinkDish" aria-hidden="true">
+          <div class="pinkDishBowl"></div>
+          <div class="pinkDishArm"></div>
+          <div class="pinkDishReceiver"></div>
+          <div class="pinkDishStem"></div>
+          <div class="pinkDishFoot"></div>
+        </div>
+      </div>
+      <div class="stats">
+        <span>Signal: <b id="scanSignal">0%</b></span>
+        <span>Direction: <b id="scanDirection">—</b></span>
+        <span>Scans: <b id="demoScans">0</b></span>
+        <span>Cards: <b id="demoCards">0</b> / <span id="demoCardsTotal">10</span></span>
+        <span>Secrets: <b id="psuSecretsFound">0</b> / <span id="psuSecretsTotal">4</span></span>
+      </div>
+      <button id="demoScanBtn">📡 HOLD TO SCAN</button>
+    </div>
+
+    <div class="psu1BottomBar">
+      <button type="button" onclick="PSU1UI.nextMode()">MODE<br><span id="psu1ModeLabel">NORMAL</span></button>
+      <button type="button" onclick="PSU1UI.nextFilter()">FILTER<br><span id="psu1FilterLabel">ALL</span></button>
+      <button type="button" id="psu1BoostBtn" onclick="PSU1UI.boost()">BOOST</button>
+    </div>
+  </div>
+
+  <div class="card steveCard">
+    <h3>🐦 STEVE ACTIVITY</h3>
+    <div id="steveActivityText">🕊️ Steve was last seen circling Old Pier.</div>
+  </div>
+
+  <div class="card discoveryCard">
+    <h3>🌊 LATEST DISCOVERY</h3>
+    <div id="latestDiscoveryText">📦 Steve spotted a buried cache beneath the pier. Use the scanner and search the area to uncover your first collectible.</div>
+    <button onclick="dailyDiscovery()">New Discovery</button>
+  </div>
+
+</div>
+
+<!-- =====================================================================
+     CHARACTERS (cat select) — kept as its own tab; not part of the
+     Home layout spec but core to PlayerManager/theme logic.
+     ===================================================================== -->
+<div class="tab" id="cats">
+  <div class="card">
+    <h2>Choose Character</h2>
+    <div class="catrow" style="display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:16px">
+      <div class="cat" onclick="setCat('Beach Cat',this)" style="background:linear-gradient(180deg,#17466e,#0d2740);border:2px solid rgba(255,212,0,.35);padding:12px;box-shadow:0 10px 20px rgba(0,0,0,.35)"><div style=\"position:absolute\"></div><img src="beachcat.jpg" style="height:170px;width:100%;object-fit:cover;border-radius:12px"/><div style="margin-top:10px;font-size:18px;font-weight:900">Beach Cat</div><div style="opacity:.8;font-size:12px;margin-top:4px">Choose Character</div><div style="margin-top:8px;font-size:11px;opacity:.75">Starter</div></div>
+      <div class="cat" onclick="setCat('Punk Cat',this)" style="background:linear-gradient(180deg,#17466e,#0d2740);border:2px solid rgba(255,212,0,.35);padding:12px;box-shadow:0 10px 20px rgba(0,0,0,.35)"><img src="punkcat.jpg" style="height:170px;width:100%;object-fit:cover;border-radius:12px"/><div style="margin-top:10px;font-size:18px;font-weight:900">Punk Cat</div><div style="opacity:.8;font-size:12px;margin-top:4px">Choose Character</div><div style="margin-top:8px;font-size:11px;opacity:.75">Starter</div></div>
+      <div class="cat" onclick="setCat('Golf Cat',this)" style="background:linear-gradient(180deg,#17466e,#0d2740);border:2px solid rgba(255,212,0,.35);padding:12px;box-shadow:0 10px 20px rgba(0,0,0,.35)"><img src="golfcat.jpg" style="height:170px;width:100%;object-fit:cover;border-radius:12px"/><div style="margin-top:10px;font-size:18px;font-weight:900">Golf Cat</div><div style="opacity:.8;font-size:12px;margin-top:4px">Choose Character</div><div style="margin-top:8px;font-size:11px;opacity:.75">Starter</div></div>
+      <div class="cat" onclick="setCat('Desert Dave',this)" style="background:linear-gradient(180deg,#17466e,#0d2740);border:2px solid rgba(255,212,0,.35);padding:12px;box-shadow:0 10px 20px rgba(0,0,0,.35)"><img src="desertdave.jpg" style="height:170px;width:100%;object-fit:cover;border-radius:12px"/><div style="margin-top:10px;font-size:18px;font-weight:900">Desert Dave</div><div style="opacity:.8;font-size:12px;margin-top:4px">Choose Character</div><div style="margin-top:8px;font-size:11px;opacity:.75">Starter</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     COLLECTION — the album. Nothing else.
+     ===================================================================== -->
+<div class="tab" id="collection">
+  <div class="albumGrid" id="albumGrid"></div>
+</div>
+
+</div>
+
+<!-- =====================================================================
+     EXPLORE — big posters, generated from Engine.AreaAssets (single
+     source of truth). No hardcoded per-area markup.
+     ===================================================================== -->
+<div class="tab" id="explore">
+  <div class="exploreIntro">
+    <h2>🧭 EXPLORE THE LAGOON</h2>
+    <p>Pick an area. Your current signal points to <b>Old Pier</b> — Steve was seen circling there.</p>
+  </div>
+  <div id="exploreGrid"></div>
+  <div id="areaView">
+    <div id="areaViewBg"><div id="areaViewOverlay">
+      <button onclick="AreaManager.leave()">⬅ RETURN</button>
+      <h1 id="areaViewTitle"></h1>
+      <div id="areaViewStory"></div>
+      <div id="areaViewResult"></div>
+      <div class="areaActions" style="display:flex;gap:10px">
+        <button onclick="AreaManager.scan()">📡 Scan</button>
+        <button id="areaViewActionBtn" onclick="AreaManager.search()">🔎 Search</button>
+      </div>
+      <ul id="areaNpcList"></ul>
+    </div></div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     RADIO — broadcast-first. Scanner/Steve debug belongs to gameplay.
+     ===================================================================== -->
+<div class="tab" id="radio">
+  <div class="card radioHero">
+    <div class="radioScrew tl"></div>
+    <div class="radioScrew tr"></div>
+    <div class="radioScrew bl"></div>
+    <div class="radioScrew br"></div>
+    <div class="radioGrille"></div>
+    <div class="radioKelp k1"></div>
+    <div class="radioKelp k2"></div>
+    <div class="radioKelp k3"></div>
+    <div class="radioKelp k4"></div>
+    <div class="radioKelp k5"></div>
+    <div class="radioBarnacles tl"><span></span><span></span><span></span></div>
+    <div class="radioBarnacles br"><span></span><span></span></div>
+    <div class="radioBarnacles screw"><span></span></div>
+    <div class="radioHeroTint"></div>
+    <div class="radioCrtNoise"></div>
+    <div class="onAirBadge">🔴 ON AIR<span class="radioEq"><i></i><i></i><i></i><i></i><i></i></span></div>
+    <div class="radioHeroContent">
+      <div class="radioLeds">
+        <span class="radioLed power">POWER</span>
+        <span class="radioLed signal" id="radioLedSignal">SIGNAL</span>
+        <span class="radioLed rec" id="radioLedRec">REC</span>
+      </div>
+      <h2>📻 SHELTER RADIO 87.4 MHz</h2>
+      <div class="radioTuner">
+        <div class="radioTunerTicks">
+          <span>88</span><span>92</span><span>96</span><span>100</span><span>104</span><span>108</span>
+        </div>
+        <div class="radioTunerTrack">
+          <div class="radioTunerNeedle"></div>
+        </div>
+      </div>
+      <div class="radioLead">The broadcasting heart of Hidden Lagoon. Rumours, signals and suspicious seagull activity.</div>
+      <div id="radioReport">📻 Welcome back to Shelter Radio...</div>
+      <button class="radioBtn" onclick="Game.get('radio').broadcast()">📻 NEW BROADCAST</button>
+    </div>
+  </div>
+  <div class="card featuredCards">
+    <h3>📡 FOUND TRANSMISSION</h3>
+    <div class="featuredCardStage">
+      <div class="featuredCardScreen">
+        <img id="featuredCardImg" alt="Recovered Shelter Radio transmission">
+        <div class="radioCondensation">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="radioPhosphorEdge"></div>
+        <div class="radioReflectionSweep"></div>
+      </div>
+      <div>
+        <div id="featuredCardName">RECOVERED SIGNAL</div>
+        <div id="featuredCardMeta">Signal recovered from Hidden Lagoon.</div>
+        <button class="radioBtn" onclick="nextRadioPhoto()">📻 NEXT TRANSMISSION</button>
+      </div>
+    </div>
+    <div class="featuredDots" id="featuredCardDots"></div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     BOTTOM NAVIGATION — single nav, renders active state, drives every
+     tab through Engine.UIManager.showTab().
+     ===================================================================== -->
+<nav id="mainNav">
+<button data-tab="home" onclick="Game.get('ui').showTab('home')" aria-label="Home" title="Home" data-candy="assets/navicons_candy/nav-star-candy.png"><span class="treatNavLabel">Home</span><img class="treatNavIcon" alt="" src="assets/navicons_v3/nav-star.png"/></button>
+<button data-tab="cats" onclick="Game.get('ui').showTab('cats')" aria-label="Cats" title="Cats" data-candy="assets/navicons_candy/nav-cat-candy.png"><span class="treatNavLabel">Cats</span><img class="treatNavIcon" alt="" src="assets/navicons_v3/nav-cat.png"/></button>
+<button data-tab="collection" onclick="Game.get('ui').showTab('collection')" aria-label="Collection" title="Collection" data-candy="assets/navicons_candy/nav-question-candy.png"><span class="treatNavLabel">Collection</span><img class="treatNavIcon" alt="" src="assets/navicons_v3/nav-question.png"/></button>
+<button data-tab="explore" onclick="Game.get('ui').showTab('explore')" aria-label="Explore" title="Explore" data-candy="assets/navicons_candy/nav-rocket-candy.png"><span class="treatNavLabel">Explore</span><img class="treatNavIcon" alt="" src="assets/navicons_v3/nav-rocket.png"/></button>
+<button data-tab="radio" onclick="Game.get('ui').showTab('radio')" aria-label="Radio" title="Radio" data-candy="assets/navicons_candy/nav-paw-candy.png"><span class="treatNavLabel">Radio</span><img class="treatNavIcon" alt="" src="assets/navicons_v3/nav-demon.png"/></button>
+</nav>
+
+<script src="js/engine/core.js"></script>
+<script src="js/world/entities.js"></script>
+<script src="js/radio/radio.js"></script>
+<script src="js/world/explore.js"></script>
+<script src="js/collection/collection.js"></script>
+
+
+<script src="js/engine/error-handler.js"></script>
+
+
+<!-- =====================================================================
+     BUILD1614 DEMO LOCK
+     Deterministic first-demo spine:
+     START QUEST -> HOME SCAN -> OLD PIER -> AREA SCAN -> HIDDEN CACHE/CARD
+     Legacy pocket-radar/debug toys are hidden for the demo.
+     ===================================================================== -->
+<link rel="stylesheet" href="css/scanner-engine.css">
+<script src="js/scanner/scanner-engine.js"></script>
+
+
+<!-- =====================================================================
+     BUILD1617 — DEMO FINAL GAMEPLAY PASS
+     Explore cards are map/navigation only. Living actors appear only
+     inside Area View. Pocket Radar + POV remain functional area tools.
+     Hidden Cove owns the herring school. Old Pier owns Sven + Macke.
+     Quest completion unlocks FREE SCAN MODE.
+     ===================================================================== -->
+
+
+
+
+<!-- BUILD1624: SCANNER FIX — use exposed HL_DEMO_LOCK across script scopes -->
+<link rel="stylesheet" href="css/scanner.css">
+<!-- NOTE (BUILD1638 cleanup): this patch used to include its own
+     pointerdown/pointerup "hold to scan" binder (bind()/start()/stop()/
+     fireScan()). It duplicated — and was fully superseded by — the
+     CORE SCANNER ENGINE further down, which clones/replaces this same
+     button and owns the real hold gesture. The dead binder script was
+     removed; the CSS above (progress fill, scanning state) is still
+     used by the CORE engine and stays. -->
+
+<!-- BUILD1627 — SCANNER FEEL TWEAK: faster, smoother, less punishing -->
+
+
+
+<!-- BUILD1634 SCANNER LASER MIX + SAFE PNG VISUAL PASS -->
+
+
+<!-- BUILD1637A PSU-1 CORE PATCH -->
+<script src="js/scanner/psu1-config.js"></script>
+
+
+
+
+<!-- BUILD1638 PSU-1 UI BRIDGE
+     Wires the window.PSU1 data model (BUILD1637A) to the Home panel's
+     POWER/SIGNAL/LOCK/RADIO LEDs and MODE/FILTER/BOOST buttons. Kept
+     as its own small module so the data model, the boot splash and
+     this UI layer can each be edited independently. -->
+
+
+
+<!-- BUILD1637E — SCANNER / RADIO HERO / MACKE VISIBILITY FIX -->
+
+
+
+
+<!-- BUILD1637F — COMPACT HOME / SCANNER 100% RESET -->
+<link rel="stylesheet" href="css/home-hero.css">
+
+
+<!-- BUILD1637G — HERO BACK / WIDE PSU-1 -->
+
+
+
+<!-- BUILD1637H — REAL WIDE SCANNER / CLEAN HOME -->
+
+
+
+<!-- BUILD1637I — FULL SCANNER HERO / DARK TREAT NAV -->
+
+
+
+<!-- BUILD1637J — ACTUAL FULL HERO / NO GREEN PANCAKE -->
+
+
+
+<!-- BUILD1637K — MORE BEACH CAT / SMALLER HUD STRIPS -->
+
+
+
+<!-- BUILD1637M — COMPACT HOME, FULL PSU, NO CROP -->
+
+
+
+<!-- BUILD1637N — TINY MISSION / CANDY UP -->
+
+
+
+
+
+<!-- BUILD1641G: HOME stage/nav gap repair -->
+<link rel="stylesheet" href="css/home-layout.css">
+<script src="js/world/stage-gap-fix.js"></script>
+
+
+<!-- BUILD1641H: surgical HOME empty-stage height fix -->
+
+
+
+
+
+
+
+
+<!-- BUILD1646 — COMPACT STAGE PATCH
+     Surgical layout patch only. Scanner/PSU-1 logic and candy-nav click logic untouched. -->
+
+
+
+<!-- BUILD1647 — PSU-1 CARD SAME WIDTH AS SIBLING CARDS
+     Previous attempt capped #home .psu1Device to max-width:320px to shrink
+     the oversized square card, but that made it narrower than every
+     sibling card (mission/Steve/discovery), which all sit at 100% of the
+     tab's content width. Matching that width back is what's wanted here
+     instead of an arbitrary cap. Because .scannerCard inside is locked to
+     aspect-ratio:720/654 (BUILD1637M, so the full PSU-1 artwork is never
+     cropped), matching the sibling width does make the card noticeably
+     taller again (aspect ratio is close to 1:1) — that's the direct
+     trade-off of "same width, no crop", not a separate bug. -->
+
+
+<!-- BUILD1648 — NICER TAB SELECTION FX
+     Pure CSS/JS layered on top of the existing treat art, active-state
+     handling, and click sounds — no new images, no changes to what the
+     candy-nav buttons look like at rest or how they're clicked. Adds:
+     (1) a per-tab colour-coded glow + pulsing outline while a tab is
+     active, instead of one flat gold glow for all five, and (2) a small
+     coloured sparkle burst on tap (spawnTreatSparkles, see click handler
+     above).
+
+     NOTE: nav button's box-shadow/filter/transform are force-reset to
+     none via !important a few patches up (from the old "invisible hit
+     zones over one big image" nav design). CSS animations can NEVER
+     override a static !important declaration, no matter the selector's
+     specificity — so a keyframe-animated box-shadow here would just
+     silently do nothing. Fix: a STATIC !important box-shadow per tab
+     for the coloured ring (confirmed this beats the reset), and an
+     outline/outline-offset keyframe for the pulse — outline isn't
+     touched by any reset rule, so it's safe to animate. -->
+<link rel="stylesheet" href="css/nav2.css">
+
+
+<!-- BUILD1649 — VISUAL POLISH PASS
+     Cohesive presentation pass only: tighter hierarchy, cleaner spacing,
+     softer page depth, refined cards, compact responsive nav and reduced
+     visual noise. Existing game logic and tab behaviour are untouched. -->
+
+
+\n<!-- BUILD1650 — DIRECT #mainNav COMPACT CANDY PATCH\n     Uses the original live navigation buttons and original click logic.\n     No cloned/generated navigation. -->\n\n
+
+
+
+
+<link rel="stylesheet" href="css/misc-mid.css">
+
+<script src="js/engine/xp-card-unlocks.js"></script>
+
+
+
+
+<script src="js/world/explore-hard-fix.js"></script>
+
+
+
+<script src="js/ui/iphone-swipe-tabs.js"></script>
+
+
+
+
+<div id="hlXpHud" aria-live="polite">
+ <div id="hlXpHudTop"><span id="hlXpLevel">LEVEL 1</span><span id="hlXpNumbers">0 / 100 XP</span></div>
+ <div id="hlXpTrack"><div id="hlXpFill"></div></div>
+</div>
+<div id="hlLevelUpFx"><div id="hlLevelUpBadge"><small>LEVEL UP!</small><strong id="hlLevelUpNumber">2</strong></div></div>
+
+<script src="js/ui/xp-level-ui.js"></script>
+
+
+
+<script src="js/ui/signature-nav-effects.js"></script>
+
+
+<link rel="stylesheet" href="css/effects.css">
+
+
+
+
+<!-- =====================================================================
+     BUILD1665 — COLLECTOR CARD FX + UNLOCK REVEAL + FIELD NOTES
+     Non-destructive additive patch for BUILD1664.
+     ===================================================================== -->
+
+
+<div id="hl1665UnlockFx" aria-hidden="true">
+  <div id="hl1665UnlockBurst"></div>
+  <div id="hl1665UnlockCard">
+    <div id="hl1665UnlockKicker">NEW FIELD CARD UNLOCKED</div>
+    <img id="hl1665UnlockImg" alt="">
+    <div id="hl1665UnlockName"></div>
+    <div id="hl1665UnlockRarity"></div>
+    <div id="hl1665UnlockNote"></div>
+  </div>
+</div>
+
+<script src="js/ui/card-fx.js"></script>
+<!-- END BUILD1665 -->
+
+
+<!-- BUILD1666 — STEVE ENCOUNTERS + RANDOM EVENTS -->
+
+
+<div id="hl1666EventLayer" aria-hidden="true"></div>
+<div id="hl1666EventToast"></div>
+<div id="hl1666StevePeek" title="Steve?"><div class="fallback">🐦</div></div>
+<div id="hl1666EncounterBadge">STEVE SIGHTINGS: <span id="hl1666SteveCount">0</span></div>
+
+<script src="js/world/random-events.js"></script>
+<!-- END BUILD1666 -->
+
+
+<!-- BUILD1667 — AREA MASTERY + SIGNAL LOG -->
+
+
+<button id="hl1667SignalLogBtn" type="button" title="Signal Log">📡</button>
+<div id="hl1667SignalPanel">
+  <h3>SIGNAL LOG</h3>
+  <div id="hl1667MasteryList"></div>
+  <div id="hl1667LogList"></div>
+</div>
+
+<script src="js/world/area-mastery.js"></script>
+<!-- END BUILD1667 -->
+
+
+<!-- BUILD1668 — DAILY MYSTERY + AREA SECRETS -->
+
+
+<div id="hl1668SolvedFx">
+  <div id="hl1668SolvedBox">
+    <div class="big">🔎✨</div>
+    <h2>DAILY MYSTERY SOLVED</h2>
+    <p id="hl1668SolvedText"></p>
+  </div>
+</div>
+
+<script src="js/world/daily-mystery.js"></script>
+<!-- END BUILD1668 -->
+
+
+<div id="memoryOverlay">
+  <div id="memoryPanel">
+    <div id="memoryInterference"></div>
+    <h2>📡 SIGNAL DETECTED</h2>
+    <p class="memorySub"><b>Transmission damaged.</b><br>Match the fragments to repair it before the signal fades.</p>
+
+    <div id="memoryStatsRow">
+      <span>MOVES <b id="memoryMoves">0</b></span>
+      <span>PAIRS <b id="memoryPairs">0</b>/6</span>
+    </div>
+
+    <div id="memoryGrid"></div>
+
+    <div id="memoryResult">
+      <div id="memoryResultStamp">SIGNAL REPAIRED</div>
+      <div id="memoryResultReward"></div>
+    </div>
+
+    <button id="memoryStartBtn">START REPAIR</button>
+    <button id="memoryCloseBtn" style="display:none">CLOSE</button>
+  </div>
+</div>
+<script src="js/world/memory-signal-minigame.js"></script>
+
+<script src="js/world/coastal-atmosphere.js"></script>
+
+</body>
+</html>
+
+<link rel="stylesheet" href="css/onboard-debug.css">
+
+<!-- BUILD1678 — F9 DEV DEBUG PANEL
+     Hidden dev tool only. Never shown to players unless they press F9.
+     Read-only: doesn't touch WorldLoop, EventManager, NPCs, or weather —
+     it only reads their existing public state (systems.length, the
+     intervals list, Game.state.world.npcs, WeatherManager.get(), a
+     requestAnimationFrame-based FPS sample) and prints it. -->
+
+<div id="hlDebugPanel">
+  <pre id="hlDebugText"></pre>
+  <button id="hlDebugResetBtn" type="button">⏻ RESET SAVE DATA</button>
+  <div id="hlDebugHint">F9 / ↑↑↓↓←→←→BA / tap Level bar ×7</div>
+</div>
+<script src="js/engine/debug-panel.js"></script>
+
+<!-- BUILD1695 — NEW PLAYER ONBOARDING
+     Short, skippable 3-slide explainer shown once: first-ever launch,
+     or right after a RESET (same "starts fresh" contract as the rest
+     of that flow). Never shown again after being seen or skipped.
+     Purely presentational — doesn't touch save data, XP, or any other
+     system. -->
+
+<div id="hlOnboard">
+  <div class="hlOnboardCard">
+    <div class="hlOnboardEmoji" id="hlOnboardEmoji">🏝️</div>
+    <h2 class="hlOnboardTitle" id="hlOnboardTitle">Welcome to Hidden Lagoon</h2>
+    <p class="hlOnboardText" id="hlOnboardText">A strange, salt-worn corner of the coast. Cats, crabs, and a suspicious seagull all call it home — and something is always drifting in on the signal.</p>
+    <div class="hlOnboardDots" id="hlOnboardDots"></div>
+    <div class="hlOnboardBtnRow">
+      <button id="hlOnboardSkip" type="button">SKIP</button>
+      <button id="hlOnboardNext" type="button">NEXT →</button>
+    </div>
+  </div>
+</div>
+<script src="js/ui/onboarding.js"></script>
+
+
+<link rel="stylesheet" href="css/late-patches.css">
+
+
+
+
+
+<link rel="stylesheet" href="css/explore-npc.css">
+
+
+
+
+<script src="js/world/recent-additions.js"></script>
+
+
+<link rel="stylesheet" href="css/radio.css">
+
+<link rel="stylesheet" href="css/recent.css">
+
+
